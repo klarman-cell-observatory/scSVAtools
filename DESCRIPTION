@@ -26,4 +26,5 @@ Imports:
     rARPACK
     nmslibR
     data.table
+    rhdf5
 RoxygenNote: 6.0.1
