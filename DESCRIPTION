@@ -1,0 +1,29 @@
+Package: scSVA
+Type: Package
+Title: Tools for scSVA package
+Version: 0.2.0
+Author@R: c(person("Marcin","Tabaka",email="mtabaka@broadinstitute.org",role=c("aut","cre")),
+                   person("Gould","Joshua",role = "ctb")
+                   person("Aviv","Regev", role = "aut"),
+                   person("Broad Institute", role = "cph"))
+Maintainer: Marcin Tabaka <mtabaka@broadinstitute.org>
+Description: A tool for visualization and exploratory analysis of singl-cell omics datasets.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true  
+BugReports: mtabaka@broadinstitute.org
+SystemRequirements:
+    Python  (>= 3.6.3),
+    Java 8,
+Depends: 
+    R (>= 3.4.3), 
+    Matrix,
+Imports: 
+    reticulate
+    RcppAnnoy
+    future
+    future.apply
+    rARPACK
+    nmslibR
+    data.table
+RoxygenNote: 6.0.1
