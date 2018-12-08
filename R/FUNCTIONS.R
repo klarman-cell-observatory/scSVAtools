@@ -12,6 +12,23 @@ options(future.globals.maxSize= Inf)
 #Diffusion Maps
 #Based on Angerer, Philipp, et al. "destiny: diffusion maps for large-scale single-cell data in R." Bioinformatics 32.8 (2015): 1241-1243.
 #With some modifications to make it fast.
+
+#' Generate Diffusion Maps
+#'
+#' @param ex_mat           Expression Matrix   
+#' @param nNN              Number of Nearest Neighbors 
+#' @param k                Number of eigenvectors (diffusion components) to compute
+#' @param nLocalSigma      Number of Nearest Neighbors to compute local sigma
+#' @param nThreads         Number of threads
+#' @param nTrees           Number of trres to generate (if AnnMethod="Annoy")
+#' @param M,efC,efS        Parameters to run Nearest Neighbors (if AnnMethod=="Nmslib")
+#' @param AnnMethod        Approximate Nearest Neighbor method (Annoy or Nmslib)
+#' @param EigDecompMethod  Eigendecomposition method (Irlba or ARPACK)   
+#' @return A list with eigenvectors (the first eigenvector is removed) and eigenvalues
+#' @examples 
+#' 
+#' @export
+
 ComputeDMap<-function(ex_mat,
                       nNN         = 10,
                       k           = 100,
@@ -129,6 +146,21 @@ ComputeDMap<-function(ex_mat,
 
 #Get approximate nearest neighbors
 
+#' Generate Diffusion Maps
+#'
+#' @param mat              matrix   
+#' @param nNN              Number of Nearest Neighbors 
+#' @param nThreads         Number of threads
+#' @param returnDistance   Whether to return distances, if FALSE only indexes will be returned
+#' @param nTrees           Number of trres to generate (if AnnMethod="Annoy")
+#' @param M,efC,efS        Parameters to run Nearest Neighbors (if AnnMethod=="Nmslib")
+#' @param AnnMethod        Approximate Nearest Neighbor method (Annoy or Nmslib)
+#' @return A list of nearest neighbor indexes and distances if returnDistance=T
+#' @examples 
+#' 
+#' @export
+
+
 GetANNs<-function(mat,
                   nNN=10,
                   nThreads=availableCores(),
@@ -198,6 +230,27 @@ GetANNs<-function(mat,
 #3D Forceatlas2 with modifications to visualize huge graphs
 #Forceatlas2 algorithm: Jacomy, Mathieu, et al. "ForceAtlas2, a continuous graph layout algorithm for handy network 
 #visualization designed for the Gephi software." PloS one 9.6 (2014): e98679.
+
+#' Generate 3D FLE
+#'
+#' @param inputFilePATH        A path to the graph input file as an adjacency list i.e. each ith row should contain Node_i and a list of Nodes connected to Node_i   
+#' @param toolkitPATH          A path to gephi toolkit
+#' @param memmory              Memmory of java virtual machine
+#' @param layout               "fa_3d"
+#' @param nsteps               Number of iterations 
+#' @param nThreads             Number of threads           
+#' @param scalingRatio         Scaling parameter, ratio of repulsive to attractive forces. Higher values will result in larger graphs.
+#' @param seed                 Seed (only for nThreads=1)
+#' @param barnesHutTheta       Theta in the Barnes Hut approximation. The higher theta, the lower accuracy and faster computations
+#' @param barnesHutUpdateIter  Update the tree every nth iteration
+#' @param updateCenter         Whether to update mass centers at each iteration
+#' @param barnesHutSplits      Split the tree construction at its first level: 1 - 8 processes, 2 - 64 processes 
+#' @param restart              If TRUE, the simulations will start from the last saved configuration.
+#' @return Two text files. _distances_ contains distances the cells move each iteration, _FLE_ contains X,Y,Z coordinates of each cell
+#' @examples 
+#' 
+#' @export
+
 GetFLE<-function(inputFilePATH,
                  toolkitPATH,
                  memmory             = "1g",

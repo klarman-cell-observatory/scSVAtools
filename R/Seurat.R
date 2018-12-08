@@ -1,5 +1,15 @@
 require(rhdf5)
 
+#' Generate hdf5 input file from Seurat object
+#'
+#' @param SeuratObject Name of the Seurat Object to be saved in hdf5 format   
+#' @param FileName     Output file name (with extension .h5,hdf5,loom)
+#' @param ChunkSize    Size of the chunks
+#' @return Seurat Object saved in hdf5 file format
+#' @examples 
+#' GenerateInputFiles_fromSeurat(PBMC,"PBMC.h5",ChunkSize=1000)
+#' @export
+
 GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000){
   h5createFile(FileName)  
   DimExMat<-dim(SeuratObject@data)
