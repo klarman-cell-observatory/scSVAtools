@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y gnupg2 \
       libeigen3-dev \
       cmake \
       wget \
-      default-jre-headless
+      default-jre-headless \
+      git
 
 #Install gsutil
 RUN apt-get update --fix-missing \
@@ -59,5 +60,5 @@ RUN mkdir gephi scsvatools
 RUN wget https://github.com/gephi/gephi-toolkit/releases/download/v0.9.2/gephi-toolkit-0.9.2-all.jar
 RUN mv gephi-toolkit-0.9.2-all.jar /gephi/ 
 COPY force-atlas-3d.jar /gephi/
-COPY R/*.R /scsvatools/
+RUN git clone http://github.com/klarman-cell-observatory/scSVAtools
 

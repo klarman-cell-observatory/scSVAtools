@@ -1,0 +1,3 @@
+[submodule "forceatlas2-3d"]
+	path = forceatlas2-3d
+	url = https://github.com/klarman-cell-observatory/forceatlas2-3d/
