@@ -54,11 +54,10 @@ RUN pip3 install --upgrade setuptools \
     numpy\
     nmslib      
 
-RUN mkdir gephi scsvatools
 
+RUN mkdir gephi    
 #Get Gephi Toolkit
-RUN wget https://github.com/gephi/gephi-toolkit/releases/download/v0.9.2/gephi-toolkit-0.9.2-all.jar
-RUN mv gephi-toolkit-0.9.2-all.jar /gephi/ 
-COPY force-atlas-3d.jar /gephi/
-RUN git clone http://github.com/klarman-cell-observatory/scSVAtools
-
+RUN  wget https://github.com/gephi/gephi-toolkit/releases/download/v0.9.2/gephi-toolkit-0.9.2-all.jar
+RUN  mv gephi-toolkit-0.9.2-all.jar /gephi/ 
+RUN  git clone http://github.com/klarman-cell-observatory/scSVAtools
+RUN  wget https://github.com/klarman-cell-observatory/forceatlas2-3d/releases/download/1.0/forceatlas2-3d.jar && mv forceatlas2-3d.jar /gephi/
