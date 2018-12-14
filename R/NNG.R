@@ -1,4 +1,4 @@
-source('/scsvatools/FUNCTIONS.R');
+source('/scSVAtools/R/FUNCTIONS.R');
 
 NNG_InputParameters<-jsonlite::read_json("/home/NNG_InputParameters.json",simplifyVector = T)
 

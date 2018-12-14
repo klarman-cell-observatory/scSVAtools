@@ -1,4 +1,4 @@
-source('/scsvatools/FUNCTIONS.R');
+source('/scSVAtools/R/FUNCTIONS.R');
 FLE_InputParameters<-jsonlite::read_json("/home/ForceDirectedLayout_InputParameters.json",simplifyVector = T)
 if(FLE_InputParameters$path==""){
   file_name<-"/home/NNG_output.csv"

@@ -1,4 +1,4 @@
-source('/scsvatools/FUNCTIONS.R');
+source('/scSVAtools/R/FUNCTIONS.R');
 start.time <- Sys.time()
 DiffusionMap_InputParameters<-jsonlite::read_json("/home/DiffusionMap_InputParameters.json",simplifyVector = T)
 
