@@ -1,9 +1,10 @@
-library(RcppAnnoy)
 library(Matrix)
 require(future)
 require(future.apply)
-library(rARPACK)
+library(RcppAnnoy)
 require(nmslibR)
+library(rARPACK)
+require(irlba)
 require(data.table)
 reticulate::use_python(system("dirname `which python3`",intern=T))
 
@@ -236,15 +237,14 @@ GetANNs<-function(mat,
 #' @param inputFilePATH        A path to the graph input file as an adjacency list i.e. each ith row should contain Node_i and a list of Nodes connected to Node_i   
 #' @param toolkitPATH          A path to gephi toolkit
 #' @param memmory              Memmory of java virtual machine
-#' @param layout               "fa_3d"
 #' @param nsteps               Number of iterations 
 #' @param nThreads             Number of threads           
 #' @param scalingRatio         Scaling parameter, ratio of repulsive to attractive forces. Higher values will result in larger graphs.
 #' @param seed                 Seed (only for nThreads=1)
-#' @param barnesHutTheta       Theta in the Barnes Hut approximation. The higher theta, the lower accuracy and faster computations
+#' @param barnesHutTheta       Theta of the Barnes Hut approximation. The higher theta, the lower accuracy and faster computations
 #' @param barnesHutUpdateIter  Update the tree every nth iteration
-#' @param updateCenter         Whether to update mass centers at each iteration
-#' @param barnesHutSplits      Split the tree construction at its first level: 1 - 8 processes, 2 - 64 processes 
+#' @param updateCenter         Update Barnes-Hut region centers when not rebuilding Barnes-Hut tree
+#' @param barnesHutSplits      Split the tree construction at its first level.  Number of threads used is 8 to the power barnesHutSplits: 1 - 8 processes, 2 - 64 processes 
 #' @param restart              If TRUE, the simulations will start from the last saved configuration.
 #' @return Two text files. _distances_ contains distances the cells move each iteration, _FLE_ contains X,Y,Z coordinates of each cell
 #' @examples 
@@ -253,7 +253,7 @@ GetANNs<-function(mat,
 
 GetFLE<-function(inputFilePATH,
                  toolkitPATH,
-                 memmory             = "1g",
+                 memmory             = "8g",
                  nsteps              = 1000,
                  nThreads            = 1,
                  scalingRatio        = 1,
