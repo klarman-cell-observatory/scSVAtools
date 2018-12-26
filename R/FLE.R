@@ -9,7 +9,7 @@ if(FLE_InputParameters$path==""){
 start.time <- Sys.time()
 FLE<-GetFLE(inputFilePATH       = file_name,
             toolkitPATH         = "/gephi/",
-            memmory             = FLE_InputParameters$memmory,
+            memory              = FLE_InputParameters$memory,
             nsteps              = FLE_InputParameters$nsteps,
             nThreads            = FLE_InputParameters$nThreads,
             scalingRatio        = FLE_InputParameters$scalingRatio,

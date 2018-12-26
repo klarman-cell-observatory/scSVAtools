@@ -234,9 +234,9 @@ GetANNs<-function(mat,
 
 #' Generate 3D FLE
 #'
-#' @param inputFilePATH        A path to the graph input file as an adjacency list i.e. each ith row should contain Node_i and a list of Nodes connected to Node_i   
-#' @param toolkitPATH          A path to gephi toolkit
-#' @param memmory              Memmory of java virtual machine
+#' @param inputFilePATH        Path to the graph input file as an adjacency list i.e. each ith row should contain Node_i and a list of Nodes connected to Node_i   
+#' @param toolkitPATH          Path to gephi toolkit
+#' @param memory               Memory of java virtual machine
 #' @param nsteps               Number of iterations 
 #' @param nThreads             Number of threads           
 #' @param scalingRatio         Scaling parameter, ratio of repulsive to attractive forces. Higher values will result in larger graphs.
@@ -253,7 +253,7 @@ GetANNs<-function(mat,
 
 GetFLE<-function(inputFilePATH,
                  toolkitPATH,
-                 memmory             = "8g",
+                 memory             = "8g",
                  nsteps              = 1000,
                  nThreads            = 1,
                  scalingRatio        = 1,
@@ -266,7 +266,7 @@ GetFLE<-function(inputFilePATH,
                  ){
   output=paste0(tools::file_path_sans_ext(inputFilePATH),"_FLE")
   if(restart==T){system(paste0("mv ",output,".distances.txt ",output,".distances_prev.txt"))}
-  Command=paste0("java -Xmx",memmory," -Djava.awt.headless=true -cp ",
+  Command=paste0("java -Xmx",memory," -Djava.awt.headless=true -cp ",
                  toolkitPATH,"forceatlas2-3d.jar:",
                  toolkitPATH,"gephi-toolkit-0.9.2-all.jar:",
                  " org.gephi.layout.plugin.forceAtlas2_3d.Main ",
