@@ -5,16 +5,17 @@ require(rhdf5)
 #' @param SeuratObject Name of the Seurat Object to be saved in hdf5 format   
 #' @param FileName     Output file name (with extension .h5,hdf5,loom)
 #' @param ChunkSize    Size of the chunks
+#' @param CompressionLevel Compression Level
 #' @return Seurat Object saved in hdf5 file format
 #' @examples 
 #' GenerateInputFiles_fromSeurat(PBMC,"PBMC.h5",ChunkSize=1000)
 #' @export
 
-GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000){
+GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000,CompressionLevel=9){
   h5createFile(FileName)  
   DimExMat<-dim(SeuratObject@data)
   h5createDataset(file=FileName, "matrix", c(DimExMat[1],DimExMat[2]),
-                  storage.mode = "double", chunk=c(ChunkSize,ChunkSize), level=9)
+                  storage.mode = "double", chunk=c(ChunkSize,ChunkSize), level=CompressionLevel)
   print("Saving Gene Expression Matrix")
   d<-1:DimExMat[1];n=ChunkSize;chunks<-split(d, ceiling(seq_along(d)/n))
   for(i in 1:length(chunks)){
@@ -31,7 +32,7 @@ GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000){
   h5createDataset(file=FileName, 
                   "row_attrs/GeneNames",
                   dims = nrow(SeuratObject@data),
-                  size = nrow(SeuratObject@data),
+                  size = max(nchar(rownames(SeuratObject@data)))+1L,
                   chunk = ChunkSize,
                   storage.mode = "character", 
                   level=9)
@@ -89,7 +90,7 @@ GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000){
       h5createDataset(file=FileName, 
                       paste0(DataSetName,"_l"),
                       dims = length(l),
-                      size = length(l),
+                      size = max(nchar(l))+1L,
                       storage.mode = "character", 
                       level=9)
       h5write(l, 
