@@ -17,7 +17,7 @@ GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000,Com
   h5createDataset(file=FileName, "matrix", c(DimExMat[1],DimExMat[2]),
                   storage.mode = "double", chunk=c(ChunkSize,ChunkSize), level=CompressionLevel)
   print("Saving Gene Expression Matrix")
-  d<-1:DimExMat[1];n=ChunkSize;chunks<-split(d, ceiling(seq_along(d)/n))
+  d<-1:DimExMat[2];n=ChunkSize;chunks<-split(d, ceiling(seq_along(d)/n))
   for(i in 1:length(chunks)){
     print(i)  
     mat<-as.matrix(SeuratObject@data[,chunks[[i]]])
@@ -44,6 +44,12 @@ GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000,Com
   Group<-"col_attrs"
   h5createGroup(FileName,Group)
   meta.data<-SeuratObject@meta.data
+  emb<-names(SeuratObject@dr)
+  
+  for(i in emb){
+  meta.data<-cbind(meta.data,SeuratObject@dr[[i]]@cell.embeddings)
+  }
+
   meta.data.class<-sapply(meta.data, class)
   
   Ncol<-nrow(meta.data)
