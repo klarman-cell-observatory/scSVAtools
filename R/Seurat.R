@@ -80,7 +80,7 @@ GenerateInputFiles_fromSeurat<-function(SeuratObject,FileName,ChunkSize=1000,Com
       h5createDataset(file=FileName, 
                       paste0(DataSetName,"_l"),
                       dims = length(l),
-                      size = length(l),
+                      size =  max(nchar(l))+1L,
                       storage.mode = "character", 
                       level=9)
       h5write(l, 
